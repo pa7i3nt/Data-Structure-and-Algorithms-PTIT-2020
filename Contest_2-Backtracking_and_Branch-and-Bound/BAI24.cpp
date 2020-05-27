@@ -1,50 +1,64 @@
-#include <bits/stdc++.h>
+#include <iostream>
+
+#include <algorithm>
+
 using namespace std;
-int n, k, B[20], arr[20];
-bool printed = false;
 
-void in() {
-    int i, t = 0;
-    for (i = 0; i < n; i++)
-        t += arr[i] * B[i];
-    if (t == k) {
-        cout << "[";
-        for (i = 0; i < n; i++)
-            if (B[i] == 1)
-                cout << arr[i] << " ";
+int a[50], b[50], n, k, testCase, mark;
 
-        // cout << "\b] ";
-        cout << "] ";
-        printed = true;
+void output() {
+    testCase++;
+    for (int i = n; i >= 1; i--)
+        if (b[i] == 1) {
+            mark = i;
+            break;
+        }
+        
+    cout << "[";
+    
+    for (int i = 1; i <= n; i++) {
+        if (b[i]) {
+            cout << a[i];
+            if (i != mark) cout << " ";
+        }
+
     }
+    
+    cout << "] ";
 }
 
-void Try(int i) {
-    int j;
-    for (j = 1; j >= 0; j--) {
-        B[i] = j;
-        if (i == n - 1)
-            in();
-        else Try(i+1);
+bool check() {
+    int sum = 0;
+    for (int i = 1; i <= n; i++) {
+        sum += a[i] * b[i];
     }
+    if (sum == k) return 1;
+    else return 0;
 }
 
-int main() {
-    int test_count;
-    cin >> test_count;
-    while (test_count--) {
+void backTrack(int i) {
+    for (int j = 1; j >= 0; j--) {
+        b[i] = j;
+        if (i == n) {
+            if (check()) output();
+        } else backTrack(i + 1);
+
+    }
+}
+main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        testCase = 0;
         cin >> n >> k;
-        for (int i = 0; i < n; i++)
-            cin >> arr[i];
-
-        printed = false;
-        sort(arr, arr + n);
+        for (int i = 1; i <= n; i++)
+            cin >> a[i];
+            
+        sort(a + 1, a + n + 1);
+        backTrack(1);
         
-        Try(0);
-        if (printed == false)
-            cout << "-1";
-        
+        if (!testCase)
+            cout << -1;
         cout << endl;
     }
-    return 0;
 }

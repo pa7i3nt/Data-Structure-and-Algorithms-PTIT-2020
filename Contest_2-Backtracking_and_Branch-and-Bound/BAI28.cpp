@@ -1,66 +1,60 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void findNumbers(vector<int>& arr, int sum,
-                    vector<vector<int> >& res,
-                    vector<int>& r, int i)
-{
-    if (sum < 0)
-        return;
+int n, sum, a[50], testCase;
+int b[50], temp;
 
-    if (sum == 0) {
-        res.push_back(r);
-        return;
+void output() {
+    testCase++;
+    cout << "[";
+    
+    for (int i = 1; i < temp; i++) {
+        cout << b[i];
+        if (i < temp - 1) cout << " ";
     }
+    
+    cout << "] ";
 
-    while (i < arr.size() && sum - arr[i] >= 0) {
-        r.push_back(arr[i]);
+}
 
-        findNumbers(arr, sum - arr[i], res, r, i);
+void backTrack(int i, int sum) {
+    if (i <= n && sum == 0) output();
+    while (i <= n && sum - a[i] >= 0) {
+        b[temp] = a[i];
+        temp++;
+
+        backTrack(i, sum - a[i]);
         i++;
-
-        r.pop_back();
+        temp--;
     }
 }
 
-vector<vector<int> > combinationSum(vector<int>& arr, int sum) {
-    sort(arr.begin(), arr.end());
-
-    arr.erase(unique(arr.begin(), arr.end()), arr.end());
-
-    vector<int> r;
-    vector<vector<int> > res;
-    findNumbers(arr, sum, res, r, 0);
-
-    return res;
-}
-
-int main() {
-    int test, n, sum;
-    cin >> test;
-    while (test--) {
+main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        testCase = 0;
+        temp = 1;
         cin >> n >> sum;
-        vector<int> arr (n);
-        for (int i = 0; i < n; i++)
-            cin >> arr[i];
-        vector<vector<int> > res = combinationSum(arr, sum);
-        if (res.size() == 0)
-            cout << "-1";
-        else {
-            for (int i = 0; i < res.size(); i++) {
-                if (res[i].size() > 0) {
-                    cout << "[";
-                    for (int j = 0; j < res[i].size(); j++) {
-                        if (j == res[i].size() - 1)
-                            cout << res[i][j];
-                        else 
-                            cout << res[i][j] << " ";
-                    }
-                    cout << "] ";
+        for (int i = 1; i <= n; i++) cin >> a[i];
+        for (int i = 1; i < n; i++) {
+            for (int j = i + 1; j <= n; j++)
+                if (a[i] == a[j]) {
+                    swap(a[j], a[n]);
+                    --n;
                 }
-            }
         }
+        
+        sort(a + 1, a + n + 1);
+        
+        if (sum < a[1]);
+        
+        else {
+            backTrack(1, sum);
+        }
+        
+        if (!testCase)
+            cout << -1;
         cout << endl;
     }
-    return 0;
 }

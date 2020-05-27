@@ -1,100 +1,88 @@
-#include <bits/stdc++.h>
-#define MAX 8
-
+#include <iostream>
 using namespace std;
 
-bool isSafe(int row, int col, int mat[][MAX],
-                int n, bool visited[][MAX])
-{
-    if (row == -1 || row == n || col == -1 ||
-                col == n || visited[row][col]
-                        || mat[row][col] == 0)
-        return false;
+// a[][] luu input
+// b[][] danh dau cac a[i][j] da dung
+// result luu ket qua 
+// temp la bien chay cua result
+// checkCase kiem tra xem neu khong co result thi output -1
+int a[20][20], b[20][20] = {0}, result[101] = {0};
+int n, temp, checkCase;
 
-    return true;
+void output() {
+    for (int i = 1; i <= 100; i++) {
+        if (result[i] == 1) cout << "D";
+        if (result[i] == 2) cout << "L";
+        if (result[i] == 3) cout << "R";
+        if (result[i] == 4) cout << "U";
+    }
+    cout << " ";
 }
 
-void printCondition(int row, int col, int mat[][MAX],
-        int n, string& path, vector<string>&
-        possiblePaths, bool visited[][MAX])
-{
-    if (row == -1 || row == n || col == -1
-            || col == n || visited[row][col]
-                        || mat[row][col] == 0)
-        return;
-
-    if (row == n - 1 && col == n - 1) {
-        possiblePaths.push_back(path);
-        return;
+void callback(int x, int y) {
+    //D
+    if (x < n && a[x + 1][y] == 1 && b[x + 1][y] == 0) {
+        result[temp++] = 1;
+        b[x + 1][y] = 1;
+        callback(x + 1, y);
+        result[--temp] = 0;
+        b[x + 1][y] = 0;
     }
 
-    visited[row][col] = true;
-
-    // Kiem tra co the di xuong duoi hay khong
-    if (isSafe(row + 1, col, mat, n, visited)) {
-        path.push_back('D');
-        printCondition(row + 1, col, mat, n, path,
-            possiblePaths, visited);
-        path.pop_back();
+    //L
+    if (y > 1 && a[x][y - 1] == 1 && b[x][y - 1] == 0) {
+        result[temp++] = 2;
+        b[x][y - 1] = 1;
+        callback(x, y - 1);
+        result[--temp] = 0;
+        b[x][y - 1] = 0;
     }
 
-    // Kiem tra co the di sang trai hay khong
-    if (isSafe(row, col - 1, mat, n, visited)) {
-        path.push_back('L');
-        printCondition(row, col - 1, mat, n, path,
-            possiblePaths, visited);
-        path.pop_back();
+    //R
+    if (y < n && a[x][y + 1] == 1 && b[x][y + 1] == 0) {
+        result[temp++] = 3;
+        b[x][y + 1] = 1;
+        callback(x, y + 1);
+        result[--temp] = 0;
+        b[x][y + 1] = 0;
     }
 
-    // Kiem tra co the di sang phai hay khong
-    if (isSafe(row, col + 1, mat, n, visited)) {
-        path.push_back('R');
-        printCondition(row, col + 1, mat, n, path,
-            possiblePaths, visited);
-        path.pop_back();
+    //U   
+    if (x > 1 && a[x - 1][y] == 1 && b[x - 1][y] == 0) {
+        result[temp++] = 4;
+        b[x - 1][y] = 1;
+        callback(x - 1, y);
+        result[--temp] = 0;
+        b[x - 1][y] = 0;
     }
 
-    // Kiem tra co the di len tren hay khong
-    if (isSafe(row - 1, col, mat, n, visited)) {
-        path.push_back('U');
-        printCondition(row - 1, col, mat, n, path,
-            possiblePaths, visited);
-        path.pop_back();
+    if (x == n && y == n) {
+        output();
+        checkCase++;
     }
-
-    visited[row][col] = false;
 }
 
-void printPath(int mat[MAX][MAX], int n) {
-    vector<string> possiblePaths;
-    string path;
-    bool visited[n][MAX];
-    memset(visited, false, sizeof(visited));
-
-    printCondition(0, 0, mat, n, path,
-                    possiblePaths, visited);
-
-    if (possiblePaths.size() == 0)
-        cout << "-1";
-    else {
-        for (int i = 0; i < possiblePaths.size(); i++)
-        cout << possiblePaths[i] << " ";
-    }
-    cout << endl;
-}
-
-int main() {
-    int test_count, n;
-    cin >> test_count;
-    while (test_count--) {
+main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        b[1][1] = 1;
+        temp = 1, checkCase = 0;
         cin >> n;
-        int mat[MAX][MAX];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                cin >> mat[i][j];
-            }
+        for (int i = 1; i <= n; i++)
+            for (int j = 1; j <= n; j++)
+                cin >> a[i][j];
+        
+        if (a[1][1] == 0 || a[n][n] == 0);
+        
+        else {
+            callback(1, 1);
         }
-        printPath(mat, n);
+        
+        if (!checkCase)
+            cout << -1;
+            
+        cout << endl;
     }
     return 0;
 }
