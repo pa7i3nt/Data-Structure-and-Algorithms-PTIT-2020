@@ -9,7 +9,7 @@ void generate() {
     queue<string> q;
     q.push("9");
 
-    for (int idx = MAX; idx > 0; idx--) {
+    for (long long idx = MAX; idx > 0; idx--) {
         string s1 = q.front();
         q.pop();
 
@@ -28,8 +28,8 @@ int main() {
     cin >> t;
     while (t--) {
         cin >> n;
-        for (int i = 0; i < vec.size(); i++) {
-            if (stoi(vec[i]) % n == 0) {
+        for (long long i = 0; i < vec.size(); i++) {
+            if (stoll(vec[i]) % n == 0) {
                 cout << vec[i] << endl;
                 break;
             }
