@@ -1,7 +1,4 @@
-#include <iostream>
-
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 int a[50], b[50], n, k, testCase, mark;
