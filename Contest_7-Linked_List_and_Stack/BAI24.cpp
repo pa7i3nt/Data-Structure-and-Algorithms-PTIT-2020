@@ -154,4 +154,5 @@ int main() {
 
         printList(R);
     }
+    return 0;
 }
