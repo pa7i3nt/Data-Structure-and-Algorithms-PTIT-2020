@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <string.h>
 using namespace std;
 
 #define MAX 10000

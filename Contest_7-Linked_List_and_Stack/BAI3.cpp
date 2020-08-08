@@ -4,7 +4,7 @@ using namespace std;
 void result(string str) {
     int n = str.length();
     int i, j = 0;
-    for (int i = 0; i < n; i++) {
+    for (i = 0; i < n; i++) {
         if (str[i] == ' ') {
             for (int pos = i - 1; pos >= j; pos--) {
                 cout << str[pos];
@@ -20,7 +20,7 @@ void result(string str) {
         }
     }
 
-    cout << endl;
+    cout << '\n';
 }
 
 int main() {
