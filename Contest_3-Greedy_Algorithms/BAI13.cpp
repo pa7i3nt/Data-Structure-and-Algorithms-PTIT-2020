@@ -3,7 +3,7 @@ using namespace std;
 
 int isPossible(string str, int d) {
     // Mang chua so lan xuat hien cua moi phan tu
-    unordered_map<char, int> freq;
+    map<char, int> freq;
 
     // Ghi nhan so lan xuat hien lon nhat
     int max_freq = 0;

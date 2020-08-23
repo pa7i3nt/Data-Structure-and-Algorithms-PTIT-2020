@@ -35,7 +35,7 @@ int main() {
     cin.ignore();
     while (t--) {
         cin >> str;
-        cout << result(str) << endl;
+        cout << result(str) << '\n';
     }
     return 0;
 }
